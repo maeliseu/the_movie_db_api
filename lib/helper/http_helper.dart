@@ -38,11 +38,16 @@ class HttpHelper {
     var result = await http.get(url);
 
     List<Movie> movies = [];
+    List mList = [];
 
     if (result.statusCode == HttpStatus.ok) {
       final jsonResponse = convert.jsonDecode(result.body);
       final movieMap = jsonResponse['results'];
-      movies = movieMap.map((i) => Movie.fromJson(i)).toList();
+      mList = movieMap.map((m) => Movie.fromJson(m)).toList();
+
+      mList.forEach((i) {
+        movies.add(i);
+      });
       return movies;
     }
     return movies;
